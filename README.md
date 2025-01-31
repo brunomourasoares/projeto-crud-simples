@@ -1,4 +1,4 @@
-# Projeto de Inserção de Dados via CSV
+# Projeto Crud Simples JavaEE
 
 Este é um projeto básico de uma aplicação web CRUD (Create, Read, Update, Delete) para gerenciamento de usuários. A aplicação permite cadastrar, listar, editar e excluir usuários armazenados em um banco de dados PostgreSQL. Ela utiliza tecnologias Java EE, como JSP e Servlets, para a interface web e conexão com o banco de dados.
 
