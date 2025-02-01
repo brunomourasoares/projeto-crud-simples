@@ -36,7 +36,7 @@ public class UserDAO {
         statement.setString(1, user.getName());
         statement.setString(2, user.getEmail());
         statement.setString(3, user.getPhone());
-        statement.setDate(4, new java.sql.Date(user.getBirthDate().getTime()));
+        statement.setDate(4, user.getBirthDate());
         statement.setString(5, user.getAddress());
 
         boolean rowInserted = statement.executeUpdate() > 0;
@@ -102,7 +102,7 @@ public class UserDAO {
         statement.setString(1, user.getName());
         statement.setString(2, user.getEmail());
         statement.setString(3, user.getPhone());
-        statement.setDate(4, new java.sql.Date(user.getBirthDate().getTime()));
+        statement.setDate(4, user.getBirthDate());
         statement.setString(5, user.getAddress());
         statement.setInt(6, user.getId());
 
@@ -124,6 +124,40 @@ public class UserDAO {
         ResultSet resultSet = statement.executeQuery();
 
         if (resultSet.next()) {
+            String name = resultSet.getString("name");
+            String email = resultSet.getString("email");
+            String phone = resultSet.getString("phone");
+            Date birthDate = resultSet.getDate("birth_date");
+            String address = resultSet.getString("address");
+
+            user = new User();
+            user.setId(id);
+            user.setName(name);
+            user.setEmail(email);
+            user.setPhone(phone);
+            user.setBirthDate(birthDate);
+            user.setAddress(address);
+        }
+
+        resultSet.close();
+        statement.close();
+
+        return user;
+    }
+
+    public User getUserByEmail(String userEmail) throws SQLException {
+        User user = null;
+        String sql = "SELECT * FROM users WHERE email = ?";
+
+        connect();
+
+        PreparedStatement statement = jdbcConnection.prepareStatement(sql);
+        statement.setString(1, userEmail);
+
+        ResultSet resultSet = statement.executeQuery();
+
+        if (resultSet.next()) {
+            int id = resultSet.getInt("id");
             String name = resultSet.getString("name");
             String email = resultSet.getString("email");
             String phone = resultSet.getString("phone");

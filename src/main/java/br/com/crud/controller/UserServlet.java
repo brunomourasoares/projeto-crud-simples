@@ -5,15 +5,14 @@ import br.com.crud.model.User;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
-import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.sql.SQLException;
+import java.sql.Date;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
-import java.util.Date;
 import java.util.List;
 
 public class UserServlet extends HttpServlet {
@@ -25,6 +24,8 @@ public class UserServlet extends HttpServlet {
     }
 
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        request.setCharacterEncoding("UTF-8");
+        response.setCharacterEncoding("UTF-8");
         doGet(request, response);
     }
 
@@ -37,6 +38,18 @@ public class UserServlet extends HttpServlet {
                     showNewForm(request, response);
                     break;
                 case "insert":
+                    try {
+                        User user = userDAO.getUserByEmail(request.getParameter("email_input"));
+                        if (user != null) {
+                            request.setAttribute("error", "Usuário já cadastrado com este e-mail!");
+                            RequestDispatcher dispatcher = request.getRequestDispatcher("userForm.jsp");
+                            dispatcher.forward(request, response);
+                            break;
+                        }
+                    } catch (SQLException e) {
+                        throw new RuntimeException(e);
+                    }
+                    String teste = request.getParameter("address_input");
                     insertUser(request, response);
                     break;
                 case "delete":
@@ -79,11 +92,11 @@ public class UserServlet extends HttpServlet {
     }
 
     private void insertUser(HttpServletRequest request, HttpServletResponse response) throws SQLException, IOException {
-        String name = request.getParameter("name");
-        String email = request.getParameter("email");
-        String phone = request.getParameter("phone");
-        String birthDateStr = request.getParameter("birthDate");
-        String address = request.getParameter("address");
+        String name = request.getParameter("name_input");
+        String email = request.getParameter("email_input");
+        String phone = request.getParameter("phone_input");
+        String birthDateStr = request.getParameter("birthdate_input");
+        String address = request.getParameter("address_input");
 
         Date birthDate = parseDate(birthDateStr);
 
@@ -100,11 +113,11 @@ public class UserServlet extends HttpServlet {
 
     private void updateUser(HttpServletRequest request, HttpServletResponse response) throws SQLException, IOException {
         int id = Integer.parseInt(request.getParameter("id"));
-        String name = request.getParameter("name");
-        String email = request.getParameter("email");
-        String phone = request.getParameter("phone");
-        String birthDateStr = request.getParameter("birthDate");
-        String address = request.getParameter("address");
+        String name = request.getParameter("name_input");
+        String email = request.getParameter("email_input");
+        String phone = request.getParameter("phone_input");
+        String birthDateStr = request.getParameter("birthdate_input");
+        String address = request.getParameter("address_input");
 
         Date birthDate = parseDate(birthDateStr);
 
@@ -130,8 +143,11 @@ public class UserServlet extends HttpServlet {
     }
 
     private Date parseDate(String dateStr) {
+        if (dateStr == null) {
+            return null;
+        }
         try {
-            return new SimpleDateFormat("yyyy-MM-dd").parse(dateStr);
+            return new Date(new SimpleDateFormat("yyyy-MM-dd").parse(dateStr).getTime());
         } catch (ParseException e) {
             throw new RuntimeException(e);
         }
