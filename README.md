@@ -43,6 +43,14 @@ Este é um projeto básico de uma aplicação web CRUD (Create, Read, Update, De
 |-- README.md
 ```
 
+## 📸 Screenshot
+<a href="https://raw.githubusercontent.com/brunomourasoares/projeto-crud-simples/refs/heads/main/data/cadastro.jpg" target="_blank">
+    <img src="https://raw.githubusercontent.com/brunomourasoares/projeto-crud-simples/refs/heads/main/data/cadastro.jpg" alt="Cadastro" width="300"/>
+</a>
+<a href="https://raw.githubusercontent.com/brunomourasoares/projeto-crud-simples/refs/heads/main/data/edicao_delecao.jpg" target="_blank">
+    <img src="https://raw.githubusercontent.com/brunomourasoares/projeto-crud-simples/refs/heads/main/data/edicao_delecao.jpg" alt="EdicaoDelecao" width="300"/>
+</a>
+
 ## 🔧 Configuração do Banco de Dados
 Certifique-se de configurar a conexão com o banco de dados no arquivo `UserDAO.java`:
 ```java
