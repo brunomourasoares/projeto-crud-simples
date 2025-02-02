@@ -7,6 +7,7 @@
 	<meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Cadastro de Usuário</title>
     <link rel="stylesheet" href="${pageContext.request.contextPath}/assets/css/style.css">
+    <link rel="icon" type="image/png" href="${pageContext.request.contextPath}/assets/img/favicon.png">
 </head>
 <body>
 <div class="tabs is-centered">
@@ -35,7 +36,7 @@
         <% } %>
         </div>
 		<form id="create_form" action="user" method="post">
-			<input type="hidden" name="id" value="${user.id}">
+			<input id="user_id" type="hidden" name="id" value="${user.id}">
 			<input type="hidden" name="action" value="${user == null ? 'insert' : 'update'}">
             <div class="field">
                 <div class="is-flex is-justify-content-space-between">
@@ -181,9 +182,9 @@
                                 type="submit"
                         >
                             <span class="icon is-small">
-                                <i class="fa-solid fa-user-plus"></i>
+                                <i id="submit_button_icon" class="fa-solid fa-user-plus"></i>
                             </span>
-                            <span>
+                            <span id="submit_button_text">
                                 Criar Usuário
                             </span>
                         </button>

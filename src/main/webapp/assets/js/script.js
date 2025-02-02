@@ -14,6 +14,10 @@ const createUserFormHandler = () => {
         const createAddress = document.getElementById('address_input');
         const createButton = document.getElementById('submit_button');
 
+        const createId = document.getElementById('user_id');
+        const createButtonText = document.getElementById('submit_button_text');
+        const createButtonIcon = document.getElementById('submit_button_icon');
+
         createForm.addEventListener('submit', (event) => {
             event.preventDefault();
             setLoadingButton(createButton);
@@ -97,6 +101,12 @@ const createUserFormHandler = () => {
                 createForm.submit();
             }, 700);
         });
+
+        if (createId !== null && createId.value !== '') {
+            createButtonText.textContent = 'Atualizar';
+            createButtonIcon.classList.remove('fa-user-plus');
+            createButtonIcon.classList.add('fa-user-edit');
+        }
     }
 };
 

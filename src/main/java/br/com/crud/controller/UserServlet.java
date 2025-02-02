@@ -49,7 +49,6 @@ public class UserServlet extends HttpServlet {
                     } catch (SQLException e) {
                         throw new RuntimeException(e);
                     }
-                    String teste = request.getParameter("address_input");
                     insertUser(request, response);
                     break;
                 case "delete":
